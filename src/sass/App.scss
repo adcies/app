@@ -4,3 +4,13 @@
   font-size: 10px;
   font-family: sans-serif;
 }
+
+body {
+  background-image: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+}
+
+.wrapper {
+  max-width: 1024px;
+  min-height: 100vh;
+  margin: 0 auto;
+}

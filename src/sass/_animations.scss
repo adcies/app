@@ -1,0 +1,21 @@
+@keyframes loadTitle {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loadButton {
+  from {
+    opacity: 0;
+    transform: translatex(45px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+}
