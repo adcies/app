@@ -19,3 +19,13 @@
     transform: translateX(-50%);
   }
 }
+
+@keyframes rotateTile {
+  from {
+    transform: rotateY(0);
+  }
+
+  to {
+    transform: rotateY(180deg);
+  }
+}

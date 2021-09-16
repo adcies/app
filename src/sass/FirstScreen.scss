@@ -4,10 +4,9 @@
   position: absolute;
   left: 0;
   top: 0;
-  height: 100%;
+  height: 100vh;
   width: 100%;
   transition: 0.5s;
-  overflow: hidden;
   &--hidden {
     opacity: 0;
   }
@@ -31,23 +30,6 @@
     left: 50%;
     top: 50%;
     transform: translateX(-50%);
-    background-color: transparent;
-    border: none;
-    width: 150px;
-    height: 60px;
-    box-shadow: 0 0 6px 1px red;
-    font-size: 2.7rem;
-    color: white;
-    text-shadow: 0 0 8px red;
-    font-style: italic;
-    letter-spacing: 2px;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: 0.2s;
     animation: loadButton 0.5s linear 0s 1;
-    &:hover {
-      background-color: red;
-      color: white;
-    }
   }
 }
