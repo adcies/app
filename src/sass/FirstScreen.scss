@@ -1,9 +1,14 @@
 @import './animations';
 
 .first-screen {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
   transition: 0.5s;
   overflow: hidden;
-  &-hide {
+  &--hidden {
     opacity: 0;
   }
   &__title {
