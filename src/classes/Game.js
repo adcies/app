@@ -6,30 +6,86 @@ class Game {
     this.firstScreen = document.querySelector('.first-screen');
     this.gameElement = document.querySelector('.game');
     this.playButton = document.querySelector('.first-screen__play');
+    this.restartButton = document.querySelector('.game__play-again');
     this.tiles = [...document.querySelectorAll('.game__tile')];
     this.images = [];
     this.tilesClicked = [];
     this.tilesGuessed = [];
   }
 
-  #disableTilesClick() {
-    this.tiles.forEach((tile) => (tile.style.pointerEvents = 'none'));
+  #resetTiles() {
+    [...this.tilesClicked, ...this.tilesGuessed].forEach((tile) => {
+      tile.style.animation = 'rotateTileClose 0.5s linear 0s 1 both';
+      setTimeout(() => {
+        tile.style.backgroundImage = `none`;
+        tile.style.pointerEvents = 'auto';
+      }, 250);
+    });
+  }
+
+  #restartGame() {
+    this.#resetTiles();
+    this.images = [];
+    this.#drawImages();
+    this.tilesClicked = [];
+    this.tilesGuessed = [];
+  }
+
+  #checkIfGameOver() {
+    if (this.tilesGuessed.length === this.tiles.length) {
+      alert('Game is over. Congratulations!');
+    }
   }
 
   #drawImages() {
     const doubleImages = [...images, ...images];
     while (doubleImages.length) {
       const index = Math.floor(Math.random() * doubleImages.length);
-      this.images.push(doubleImages.splice(index, 1));
+      this.images.push(doubleImages.splice(index, 1)[0]);
     }
   }
 
-  #checkIfToCompare() {}
+  #handleCompareTiles() {
+    if (
+      this.tilesClicked[0].style.backgroundImage ===
+      this.tilesClicked[1].style.backgroundImage
+    ) {
+      this.tilesGuessed.push(this.tilesClicked[0], this.tilesClicked[1]);
+      this.tilesClicked = [];
+    } else {
+      this.tilesClicked[0].style.animation =
+        'rotateTileClose 0.5s linear 0s 1 both';
+      this.tilesClicked[1].style.animation =
+        'rotateTileClose 0.5s linear 0s 1 both';
+      setTimeout(() => {
+        this.tilesClicked[0].style.backgroundImage = `none`;
+        this.tilesClicked[1].style.backgroundImage = `none`;
+        this.tilesClicked = [];
+      }, 250);
+    }
+  }
+
+  #checkIfToCompare() {
+    if (this.tilesClicked.length === 2) {
+      this.#handleCompareTiles();
+    }
+    setTimeout(() => {
+      const tilesDisabled =
+        this.tilesClicked.length === 2
+          ? this.tilesGuessed
+          : [...this.tilesGuessed, ...this.tilesClicked];
+      this.tiles
+        .filter((tile) => !tilesDisabled.includes(tile))
+        .forEach((tile) => (tile.style.pointerEvents = 'auto'));
+      this.#checkIfGameOver();
+    }, 250);
+  }
 
   #handleClickOnTile(e, index) {
     this.tilesClicked.push(e.target);
-    e.target.classList.add('game__tile--active');
-    e.target.style.pointerEvents = 'none';
+    this.tiles.forEach((tile) => {
+      tile.style.pointerEvents = 'none';
+    });
     e.target.style.animation = 'rotateTile 0.5s linear 0s 1 both';
     setTimeout(() => {
       e.target.style.backgroundImage = `url(${this.images[index]})`;
@@ -38,6 +94,7 @@ class Game {
       }, 250);
     }, 250);
   }
+
   #addClickListenerToTiles() {
     this.tiles.forEach((tile, index) => {
       tile.addEventListener('click', (e) =>
@@ -60,6 +117,7 @@ class Game {
 
   init() {
     this.playButton.addEventListener('click', this.#showBoard.bind(this));
+    this.restartButton.addEventListener('click', this.#restartGame.bind(this));
   }
 }
 
