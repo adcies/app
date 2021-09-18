@@ -1,0 +1,10 @@
+.statistics {
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  color: white;
+  text-transform: uppercase;
+  &__element {
+    flex: 1 1 100%;
+  }
+}

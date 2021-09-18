@@ -1,6 +1,8 @@
 import '../sass/Game.scss';
 import images from '../images';
 
+import Statistics from './Statistics';
+
 class Game {
   constructor() {
     this.firstScreen = document.querySelector('.first-screen');
@@ -11,6 +13,9 @@ class Game {
     this.images = [];
     this.tilesClicked = [];
     this.tilesGuessed = [];
+    this.statistics = new Statistics();
+
+    this.time = 5;
   }
 
   #resetTiles() {
@@ -18,13 +23,16 @@ class Game {
       tile.style.animation = 'rotateTileClose 0.5s linear 0s 1 both';
       setTimeout(() => {
         tile.style.backgroundImage = `none`;
-        tile.style.pointerEvents = 'auto';
       }, 250);
+    });
+    this.tiles.forEach((tile) => {
+      tile.style.pointerEvents = 'auto';
     });
   }
 
   #restartGame() {
     this.#resetTiles();
+    this.statistics.resetAttempts();
     this.images = [];
     this.#drawImages();
     this.tilesClicked = [];
@@ -33,6 +41,7 @@ class Game {
 
   #checkIfGameOver() {
     if (this.tilesGuessed.length === this.tiles.length) {
+      this.statistics.addWin();
       alert('Game is over. Congratulations!');
     }
   }
@@ -67,6 +76,7 @@ class Game {
 
   #checkIfToCompare() {
     if (this.tilesClicked.length === 2) {
+      this.statistics.addAttempt();
       this.#handleCompareTiles();
     }
     setTimeout(() => {
@@ -105,6 +115,7 @@ class Game {
 
   #startGame() {
     this.#drawImages();
+    this.statistics.renderStatistics();
     this.#addClickListenerToTiles();
   }
 
