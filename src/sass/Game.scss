@@ -8,14 +8,13 @@
   width: 100%;
   z-index: -1;
   opacity: 0;
-  transition: 0.5s;
   overflow-y: hidden;
   text-align: center;
   &--active {
     height: 100%;
     overflow-y: visible;
     z-index: 1;
-    opacity: 1;
+    animation: loadGame 0.5s linear 0s 1 reverse both;
   }
   &__board {
     display: flex;

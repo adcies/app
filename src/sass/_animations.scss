@@ -39,3 +39,12 @@
     transform: rotateY(-180deg);
   }
 }
+
+@keyframes loadGame {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
